@@ -16,8 +16,10 @@ async function checkInternPassword() {
     const correctHash = 'd951ba4838301581f57387313447ea02e620b1a52237d75ace23c3039cf039b9';
     
     if (hashedPassword === correctHash) {
+        // Correct password: redirect to the guestbook
         window.location.href = 'guestbook.html';
     } else {
+        // Incorrect password: show error message
         document.getElementById('error-message').textContent = 'Wrong password!';
     }
 }
@@ -30,14 +32,16 @@ async function checkMentorPassword() {
     const correctHash = '558c2e1473fb38bf2f11ba2d28d3989f1cc9260785a75984041caad298681af3';
     
     if (hashedPassword === correctHash) {
+        // Correct password: get the selected mentor and redirect to guestbook
         const mentorName = document.getElementById('mentorName').value;
         window.location.href = `guestbook.html?mentor=${mentorName}`;
     } else {
+        // Incorrect password: show error message
         document.getElementById('error-message').textContent = 'Wrong password!';
     }
 }
 
-// Display mentor name and load guestbook
+// Display mentor name in guestbook page
 window.onload = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mentorName = urlParams.get('mentor');
