@@ -18,7 +18,7 @@ async function checkInternPassword() {
     if (hashedPassword === correctHash) {
         window.location.href = 'guestbook.html';
     } else {
-        document.getElementById('error-message').textContent = 'Incorrect password!';
+        document.getElementById('error-message').textContent = 'Wrong password!';
     }
 }
 
@@ -33,7 +33,7 @@ async function checkMentorPassword() {
         const mentorName = document.getElementById('mentorName').value;
         window.location.href = `guestbook.html?mentor=${mentorName}`;
     } else {
-        document.getElementById('error-message').textContent = 'Incorrect password!';
+        document.getElementById('error-message').textContent = 'Wrong password!';
     }
 }
 
