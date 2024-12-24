@@ -3,16 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christmas Message Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Christmas Guestbook</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #ff2a68;
+            color: white;
+            padding: 20px 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            border-bottom: 10px solid #ff7f50;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 5px solid #ff7f50;
+        }
+
+        .form-container {
+            background-color: #ffebcd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #ff7f50;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ff2a68;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff7f50;
+        }
+
+        .guestbook {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 350px;
+            overflow-y: scroll;
+        }
+
+        .guestbook-entry {
+            background-color: #fff;
+            border: 2px solid #ff7f50;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .guestbook-entry p {
+            margin: 5px 0;
+        }
+
+        .guestbook-entry .name {
+            font-weight: bold;
+            color: #ff2a68;
+        }
+
+        .snowflakes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            animation: snowfall 10s linear infinite;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: snowflake 5s linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% {
+                top: -10px;
+                left: 0%;
+            }
+            100% {
+                top: 100%;
+                left: 100%;
+            }
+        }
+
+        @keyframes snowflake {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to the Christmas Message Game!</h1>
-        <div class="button-container">
-            <button onclick="window.location.href='intern.html'">Intern</button>
-            <button onclick="window.location.href='mentor.html'">Mentor</button>
+
+<header>
+    Merry Christmas! 🎄 Leave a message for [Name] 🎅
+</header>
+
+<div class="container">
+
+    <div class="form-container">
+        <h3>Sign the Guestbook!</h3>
+        <form id="guestbookForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Leave Message</button>
+        </form>
+    </div>
+
+    <div class="guestbook">
+        <div id="messagesList">
+            <!-- Messages will appear here -->
         </div>
     </div>
+
+</div>
+
+<!-- Snowflakes Animation -->
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake" style="left: 5%; animation-duration: 7s;"></div>
+    <div class="snowflake" style="left: 10%; animation-duration: 10s;"></div>
+    <div class="snowflake" style="left: 15%; animation-duration: 8s;"></div>
+    <div class="snowflake" style="left: 20%; animation-duration: 6s;"></div>
+    <div class="snowflake" style="left: 25%; animation-duration: 9s;"></div>
+    <div class="snowflake" style="left: 30%; animation-duration: 12s;"></div>
+    <div class="snowflake" style="left: 35%; animation-duration: 5s;"></div>
+    <div class="snowflake" style="left: 40%; animation-duration: 11s;"></div>
+    <div class="snowflake" style="left: 45%; animation-duration: 10s;"></div>
+    <div class="snowflake" style="left: 50%; animation-duration: 6s;"></div>
+</div>
+
+<script>
+    // Handle form submission
+    document.getElementById("guestbookForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById("name").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (name && message) {
+            const messageList = document.getElementById("messagesList");
+            
+            const entryDiv = document.createElement("div");
+            entryDiv.classList.add("guestbook-entry");
+            
+            entryDiv.innerHTML = `
+                <p class="name">${name}</p>
+                <p>${message}</p>
+            `;
+            
+            messageList.prepend(entryDiv);  // Add new message at the top
+            
+            // Clear the form fields after submission
+            document.getElementById("name").value = "";
+            document.getElementById("message").value = "";
+        } else {
+            alert("Please fill in both fields!");
+        }
+    });
+</script>
+
 </body>
 </html>
