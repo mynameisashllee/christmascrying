@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>john!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #e63946;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header .tree-icon {
+            font-size: 1.5em;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            margin-bottom: 30px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #ff4d4d;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e63946;
+        }
+
+        .guestbook {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #e1e1e1;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .guestbook-entry {
+            background-color: #fff;
+            border: 1px solid #ff4d4d;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            text-align: left;
+            position: relative;
+        }
+
+        .guestbook-entry p {
+            margin: 5px 0;
+        }
+
+        .guestbook-entry .name {
+            font-weight: bold;
+            color: #ff4d4d;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            visibility: hidden;
+        }
+
+        .guestbook-entry:hover .delete-btn {
+            visibility: visible;
+        }
+
+        /* Simple tree icon using CSS */
+        .tree-icon::before {
+            content: "🎄"; /* This adds a simple Christmas tree emoji */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <span class="tree-icon"></span>
+</header>
+
+<div class="container">
+    <div class="form-container">
+        <h3>Merry Christmas John!</h3>
+        <form id="guestbookForm">
+            <input type="text" id="name" placeholder="name" required>
+            <textarea id="message" rows="5" placeholder="type here!" required></textarea>
+            <button type="submit">post!</button>
+        </form>
+    </div>
+
+    <div class="guestbook">
+        <div id="messagesList">
+            <!-- Guestbook messages will appear here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Handle form submission
+    document.getElementById("guestbookForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById("name").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (name && message) {
+            const messageList = document.getElementById("messagesList");
+            
+            const entryDiv = document.createElement("div");
+            entryDiv.classList.add("guestbook-entry");
+
+            // Create a delete button
+            const deleteBtn = document.createElement("button");
+            deleteBtn.classList.add("delete-btn");
+            deleteBtn.innerText = "delete";
+            deleteBtn.addEventListener("click", function() {
+                // Only allow the message owner to delete
+                if (confirm(`are you sure you want to delete your message, ${name}?`)) {
+                    messageList.removeChild(entryDiv);
+                }
+            });
+
+            entryDiv.innerHTML = `
+                <p class="name">${name}</p>
+                <p>${message}</p>
+            `;
+
+            // Append the delete button and entry div
+            entryDiv.appendChild(deleteBtn);
+            messageList.prepend(entryDiv);  // Add new message at the top
+
+            // Clear the form fields after submission
+            document.getElementById("name").value = "";
+            document.getElementById("message").value = "";
+        } else {
+            alert("Please fill in both fields!");
+        }
+    });
+</script>
+
+</body>
+</html>
